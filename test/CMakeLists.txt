@@ -1,5 +1,5 @@
 
-
+# test 01: test_Pub
 add_executable(
         test_Pub
         test_Pub.cpp
@@ -10,10 +10,15 @@ target_link_libraries(
         Pub
 )
 
-#target_include_directories(
-#        test_Pub
-#        PUBLIC
-#        ../include
-#)
+# test 02: test_Sub
+add_executable(
+        test_Sub
+        test_Sub.cpp
+)
 
-install(TARGETS test_Pub)
+target_link_libraries(
+        test_Sub
+        Sub
+)
+
+install(TARGETS test_Pub test_Sub)
