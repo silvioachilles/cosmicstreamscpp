@@ -2,7 +2,9 @@
 
 #include <string>
 #include <zmq.hpp>
+#include <vector>
 
+using std::vector;
 using std::string;
 
 class Sub
@@ -20,6 +22,7 @@ public:
     string m_address;
 
     void recv(void*& data, size_t& size);
+    void recv_multipart(vector<void*>& datas, vector<size_t>& sizes);
 
     string craft_address();
 };

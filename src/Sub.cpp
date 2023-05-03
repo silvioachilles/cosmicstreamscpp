@@ -1,4 +1,5 @@
 #include "Sub.h"
+#include "zmq_addon.hpp"
 
 #include <iostream>
 
@@ -28,6 +29,23 @@ void Sub::recv(void*& data, size_t& size) {
 
     data = msg.data();
     size = msg.size();
+}
+
+void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
+    vector<zmq::message_t> msgs;
+
+    zmq::recv_multipart(m_socket, std::back_inserter(msgs));
+
+    datas = vector<void*> (msgs.size());
+    sizes = vector<size_t> (msgs.size());
+
+    for (int i = 0; i < msgs.size(); i++)
+    {
+        datas[i] = msgs[i].data();
+        sizes[i] = msgs[i].size();
+    }
+
+//    string topic_str = std::string(static_cast<const char *>(msgs[0].data()), msgs[0].size());;
 }
 
 string Sub::craft_address() {

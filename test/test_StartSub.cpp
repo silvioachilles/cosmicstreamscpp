@@ -7,6 +7,7 @@
 using std::string;
 using std::cout;
 using std::endl;
+using std::to_string;
 
 
 int main()
@@ -22,6 +23,11 @@ int main()
     {
         Json::Value metadata = start_sub.recv_start();
 
+        float energy = metadata["energy"].asFloat();
         cout << "metadata received." << endl;
+        cout << "Energy: " << to_string(energy) << endl;
+        cout << "Distance: " << to_string(metadata["distance"].asFloat()) << endl;
+        cout << "Pixel size: " << to_string(metadata["x_pixel_size"].asFloat()) << endl;
+        cout << "Pixel count: " << to_string(metadata["output_pixel_count"].asFloat()) << endl;
     }
 }

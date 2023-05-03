@@ -9,14 +9,14 @@ StartSub::StartSub(const string& host, const int& port, const string& topic):
 }
 
 Json::Value StartSub::recv_start() {
-    void* data;
-    size_t size;
+    vector<void*> datas;
+    vector<size_t> sizes;
+    recv_multipart(datas, sizes);
 
-    recv(data, size);
-    string* data_topic_string_ptr = static_cast<string*>(data);
-//    string data_topic_string = *data_topic_string_ptr;
-    string data_string = data_topic_string_ptr->substr(5);
-    int data_length = static_cast<int>(data_string.length());
+    void* metadata_void = datas[1];
+    size_t size = sizes[1];
+
+    string metadata_str = string(static_cast<const char*>(metadata_void), size);
 
     Json::CharReaderBuilder builder;
     const unique_ptr<Json::CharReader> reader(builder.newCharReader());
@@ -25,8 +25,8 @@ Json::Value StartSub::recv_start() {
     JSONCPP_STRING err;
 
     bool read_success = reader->parse(
-            data_string.c_str(),
-            data_string.c_str() + data_length,
+            metadata_str.c_str(),
+            metadata_str.c_str() + metadata_str.length(),
             &metadata,
             &err
             );
