@@ -2,7 +2,7 @@
 # test 01: test_Pub
 add_executable(
         test_Pub
-        test_Pub.cpp
+        "${CMAKE_SOURCE_DIR}/test/test_Pub.cpp"
 )
 
 target_link_libraries(
@@ -10,10 +10,12 @@ target_link_libraries(
         Pub
 )
 
+install(TARGETS test_Pub)
+
 # test 02: test_Sub
 add_executable(
         test_Sub
-        test_Sub.cpp
+        "${CMAKE_SOURCE_DIR}/test/test_Sub.cpp"
 )
 
 target_link_libraries(
@@ -21,4 +23,17 @@ target_link_libraries(
         Sub
 )
 
-install(TARGETS test_Pub test_Sub)
+install(TARGETS test_Sub)
+
+# test 03: test_StartSub
+add_executable(
+        test_StartSub
+        "${CMAKE_SOURCE_DIR}/test/test_StartSub.cpp"
+)
+
+target_link_libraries(
+        test_StartSub
+        Start
+)
+
+install(TARGETS test_StartSub)
