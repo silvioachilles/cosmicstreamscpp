@@ -1,5 +1,7 @@
 #include "defaults.h"
 
+string PUB_HOST_ALL = "*";
+
 int FRAME_PORT = 37013;
 string FRAME_TOPIC = "frame";
 

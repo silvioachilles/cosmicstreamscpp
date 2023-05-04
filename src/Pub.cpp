@@ -1,10 +1,13 @@
 #include "Pub.h"
 
+#include <zmq_addon.hpp>
 #include <iostream>
+#include <array>
 
 using std::to_string;
 using std::cout;
 using std::endl;
+using std::array;
 
 
 Pub::Pub(const string& host, const int& port, const string& topic) {
@@ -22,8 +25,13 @@ Pub::Pub(const string& host, const int& port, const string& topic) {
 }
 
 void Pub::send(void* data, const size_t size) {
+    zmq::message_t topic (m_topic);
     zmq::message_t msg (data, size);
-    m_socket.send(msg, zmq::send_flags::none);
+
+    array<zmq::message_t, 2> msgs = {zmq::message_t(m_topic), zmq::message_t(data, size)};
+
+    // m_socket.send(msg, zmq::send_flags::none);
+    zmq::send_multipart(m_socket,msgs,zmq::send_flags::none);
 }
 
 string Pub::craft_address() {

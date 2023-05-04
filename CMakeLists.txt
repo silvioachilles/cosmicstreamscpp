@@ -9,13 +9,13 @@ find_package(jsoncpp CONFIG REQUIRED)
 add_library(
     Pub
     "${CMAKE_SOURCE_DIR}/src/Pub.cpp"
-    "${CMAKE_SOURCE_DIR}/include/Base/Pub.h"
+    "${CMAKE_SOURCE_DIR}/include/base/Pub.h"
 )
 
 target_include_directories(
         Pub
         PRIVATE
-        "${CMAKE_SOURCE_DIR}/include/Base"
+        "${CMAKE_SOURCE_DIR}/include/base"
 )
 
 target_link_libraries(
@@ -31,13 +31,13 @@ add_library(
         Sub
         STATIC
         "${CMAKE_SOURCE_DIR}/src/Sub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/Base/Sub.h"
+        "${CMAKE_SOURCE_DIR}/include/base/Sub.h"
 )
 
 target_include_directories(
         Sub
         PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/Base"
+        "${CMAKE_SOURCE_DIR}/include/base"
 )
 
 target_link_libraries(
@@ -50,36 +50,40 @@ install(TARGETS Sub)
 ########## -- Globals -- ##########
 add_library(
         Globals
-        "${CMAKE_SOURCE_DIR}/src/defaults.cpp"
-        "${CMAKE_SOURCE_DIR}/include/Globals/defaults.h"
+        "${CMAKE_SOURCE_DIR}/globals/defaults.cpp"
+        "${CMAKE_SOURCE_DIR}/globals/defaults.h"
 )
 
 target_include_directories(
         Globals
         PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/Globals"
+        "${CMAKE_SOURCE_DIR}/globals"
 )
 
 install(TARGETS Globals)
 
 
-########### -- Start -- ###########
+########### -- start -- ###########
 add_library(
         Start
         "${CMAKE_SOURCE_DIR}/src/StartSub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/Start/StartSub.h"
+        "${CMAKE_SOURCE_DIR}/include/start/StartSub.h"
+        "${CMAKE_SOURCE_DIR}/src/StartPub.cpp"
+        "${CMAKE_SOURCE_DIR}/include/start/StartPub.h"
 )
 
 target_include_directories(
         Start
         PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/Start"
+        "${CMAKE_SOURCE_DIR}/include/start"
 )
 
 target_link_libraries(
         Start
+        PUBLIC
         Globals
         Sub
+        Pub
         JsonCpp::JsonCpp
 )
 

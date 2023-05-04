@@ -37,3 +37,16 @@ target_link_libraries(
 )
 
 install(TARGETS test_StartSub)
+
+# test 04: test_StartPub
+add_executable(
+        test_StartPub
+        "${CMAKE_SOURCE_DIR}/test/test_StartPub.cpp"
+)
+
+target_link_libraries(
+        test_StartPub
+        Start
+)
+
+install(TARGETS test_StartPub)

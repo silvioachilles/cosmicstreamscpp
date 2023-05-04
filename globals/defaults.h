@@ -4,6 +4,8 @@
 
 using std::string;
 
+extern string PUB_HOST_ALL;
+
 extern int FRAME_PORT;
 extern string FRAME_TOPIC;
 
