@@ -89,4 +89,30 @@ target_link_libraries(
 
 install(TARGETS Start)
 
+########### -- frame -- ###########
+add_library(
+        Frame
+        "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
+        "${CMAKE_SOURCE_DIR}/include/frame/FrameSub.h"
+)
+
+target_include_directories(
+        Frame
+        PUBLIC
+        "${CMAKE_SOURCE_DIR}/include/frame"
+)
+
+target_link_libraries(
+        Frame
+        PUBLIC
+        Globals
+        Sub
+        Pub
+        JsonCpp::JsonCpp
+)
+
+install(TARGETS Frame)
+
+
+#### -> Add subdirectories
 add_subdirectory(test)
