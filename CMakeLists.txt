@@ -4,6 +4,29 @@ project(cosmicstreams)
 find_package(cppzmq)
 find_package(jsoncpp CONFIG REQUIRED)
 
+# highjson is a target that brings the jsoncpp to a higher level so that
+# jsoncpp can be used with single function calls.
+############ -- highjson -- ############
+add_library(
+        highjson
+        "${CMAKE_SOURCE_DIR}/src/highjson.cpp"
+        "${CMAKE_SOURCE_DIR}/include/highjson/highjson.h"
+)
+
+target_include_directories(
+        highjson
+        PUBLIC
+        "${CMAKE_SOURCE_DIR}/include/highjson"
+)
+
+target_link_libraries(
+        highjson
+        PUBLIC
+        JsonCpp::JsonCpp
+)
+
+install(TARGETS highjson)
+
 # Pub and Sub are low-level targets.
 ############ -- Pub -- ############
 add_library(
