@@ -14,6 +14,11 @@ int main() {
     string topic = "frame";
     FrameSub frame_sub (host, port, topic);
 
-
-    cout << "Works" << endl;
+    while (true) {
+        Frame frame = frame_sub.recv_frame();
+        cout << "frame received" << endl;
+        cout << "shape_y: " << frame.shape_y << endl;
+        cout << "shape_x: " << frame.shape_x << endl;
+        cout << "dtype: " << frame.dtype << endl;
+    }
 }

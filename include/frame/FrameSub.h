@@ -11,18 +11,18 @@ using std::cout;
 using std::endl;
 
 
-struct frame {
-    int index;
-    float pos_y;
-    float pos_x;
+struct Frame {
+    size_t index;
+    float posy;
+    float posx;
     string identifier;
 
     string dtype;
     void* data;
-    size_t data_ny;
-    size_t data_nx;
+    size_t shape_y;
+    size_t shape_x;
     string byteorder;
-    string elemorder;
+    string order;
 
     Json::Value metadata;
 };
@@ -32,5 +32,5 @@ class FrameSub: Sub {
 public:
     FrameSub(string host, int port, string topic);
 
-    frame recv_frame();
+    Frame recv_frame();
 };

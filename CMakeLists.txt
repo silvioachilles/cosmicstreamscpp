@@ -107,7 +107,6 @@ target_link_libraries(
         Globals
         Sub
         Pub
-        # JsonCpp::JsonCpp
         highjson
 )
 
@@ -132,7 +131,7 @@ target_link_libraries(
         Globals
         Sub
         Pub
-        JsonCpp::JsonCpp
+        highjson
 )
 
 install(TARGETS Frame)
