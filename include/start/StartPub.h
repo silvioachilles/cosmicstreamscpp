@@ -4,6 +4,7 @@
 #include "defaults.h"
 #include <string>
 #include <json/json.h>
+#include "highjson.h"
 
 using std::string;
 

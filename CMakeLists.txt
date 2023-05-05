@@ -107,7 +107,8 @@ target_link_libraries(
         Globals
         Sub
         Pub
-        JsonCpp::JsonCpp
+        # JsonCpp::JsonCpp
+        highjson
 )
 
 install(TARGETS Start)
