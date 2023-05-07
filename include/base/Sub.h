@@ -3,6 +3,7 @@
 #include <string>
 #include <zmq.hpp>
 #include <vector>
+#include "highjson.h"
 
 using std::vector;
 using std::string;
@@ -15,6 +16,7 @@ public:
 
     zmq::context_t m_context;
     zmq::socket_t m_socket;
+    zmq::socket_ref m_socket_ref = m_socket;
 
     string m_host;
     int m_port;
@@ -23,6 +25,7 @@ public:
 
     void recv(void*& data, size_t& size);
     void recv_multipart(vector<void*>& datas, vector<size_t>& sizes);
+    Json::Value recv_json();
 
     string craft_address();
 };

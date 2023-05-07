@@ -25,29 +25,32 @@ target_link_libraries(
 
 install(TARGETS test_Sub)
 
-# test 03: test_StartSub
+# test 03: test_Sub_start
 add_executable(
-        test_StartSub
-        "${CMAKE_SOURCE_DIR}/test/test_StartSub.cpp"
+        test_Sub_start
+        "${CMAKE_SOURCE_DIR}/test/test_Sub_start.cpp"
 )
 
 target_link_libraries(
-        test_StartSub
-        Start
+        test_Sub_start
+        Sub
 )
 
-install(TARGETS test_StartSub)
+install(TARGETS test_Sub_start)
 
-# test 04: test_StartPub
+# test 04: test_Pub_start
 add_executable(
-        test_StartPub
-        "${CMAKE_SOURCE_DIR}/test/test_StartPub.cpp"
+        test_Pub_start
+        "${CMAKE_SOURCE_DIR}/test/test_Pub_start.cpp"
 )
 
 target_link_libraries(
-        test_StartPub
-        Start
+        test_Pub_start
+        PUBLIC
+        Pub
 )
+
+install(TARGETS test_Pub_start)
 
 # test 05: test_FrameSub
 add_executable(
@@ -71,4 +74,4 @@ target_link_libraries(
         highjson
 )
 
-install(TARGETS test_StartPub)
+install(TARGETS test_highjson)

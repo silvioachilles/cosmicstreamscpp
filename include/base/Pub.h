@@ -2,6 +2,7 @@
 
 #include <string>
 #include <zmq.hpp>
+#include <json/json.h>
 
 
 using std::string;
@@ -21,6 +22,7 @@ public:
     zmq::socket_t m_socket;
 
     void send(void* data, size_t size);
+    void send_json(const Json::Value& json_value);
 
     string craft_address();
 };

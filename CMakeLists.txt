@@ -37,13 +37,15 @@ add_library(
 
 target_include_directories(
         Pub
-        PRIVATE
+        PUBLIC
         "${CMAKE_SOURCE_DIR}/include/base"
 )
 
 target_link_libraries(
         Pub
         cppzmq
+        highjson
+        JsonCpp::JsonCpp
 )
 
 install(TARGETS Pub)
@@ -66,6 +68,7 @@ target_include_directories(
 target_link_libraries(
         Sub
         cppzmq
+        highjson
 )
 
 install(TARGETS Sub)
@@ -75,6 +78,7 @@ add_library(
         Globals
         "${CMAKE_SOURCE_DIR}/globals/defaults.cpp"
         "${CMAKE_SOURCE_DIR}/globals/defaults.h"
+        "${CMAKE_SOURCE_DIR}/globals/structs.h"
 )
 
 target_include_directories(
@@ -83,34 +87,13 @@ target_include_directories(
         "${CMAKE_SOURCE_DIR}/globals"
 )
 
-install(TARGETS Globals)
-
-
-########### -- start -- ###########
-add_library(
-        Start
-        "${CMAKE_SOURCE_DIR}/src/StartSub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/start/StartSub.h"
-        "${CMAKE_SOURCE_DIR}/src/StartPub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/start/StartPub.h"
-)
-
-target_include_directories(
-        Start
-        PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/start"
-)
-
 target_link_libraries(
-        Start
-        PUBLIC
         Globals
-        Sub
-        Pub
-        highjson
+        PUBLIC
+        JsonCpp::JsonCpp
 )
 
-install(TARGETS Start)
+install(TARGETS Globals)
 
 ########### -- frame -- ###########
 add_library(
@@ -136,6 +119,27 @@ target_link_libraries(
 
 install(TARGETS Frame)
 
+######### -- RecoStream -- #########
+add_library(
+        RecoStream
+        "${CMAKE_SOURCE_DIR}/src/RecoStream.cpp"
+        "${CMAKE_SOURCE_DIR}/include/streamer/RecoStream.h"
+)
+
+target_include_directories(
+        RecoStream
+        PUBLIC
+        "${CMAKE_SOURCE_DIR}/include/streamer"
+)
+
+target_link_libraries(
+        RecoStream
+        PUBLIC
+        Sub
+        Frame
+)
+
+install(TARGETS RecoStream)
 
 #### -> Add subdirectories
 add_subdirectory(test)

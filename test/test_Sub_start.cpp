@@ -1,4 +1,4 @@
-#include "StartSub.h"
+#include "Sub.h"
 #include <json/json.h>
 
 #include <string>
@@ -19,10 +19,10 @@ int main()
     string host = "127.0.0.1";
     int port = 5555;
     string topic = "start";
-    StartSub start_sub (host, port, topic);
+    Sub start_sub (host, port, topic);
     while (true)
     {
-        Json::Value metadata = start_sub.recv_start();
+        Json::Value metadata = start_sub.recv_json();
 
         float energy = metadata["energy"].asFloat();
         cout << "metadata received." << endl;

@@ -1,4 +1,4 @@
-#include "StartPub.h"
+#include "Pub.h"
 
 #include <string>
 #include <iostream>
@@ -15,7 +15,7 @@ int main()
     int port = 5555;
     string topic = "start";
 
-    StartPub start_pub = StartPub(host, port, topic);
+    Pub start_pub = Pub(host, port, topic);
 
     // Create the metadata that is send afterwards.
     // translations first.
@@ -52,7 +52,7 @@ int main()
         string input;
         cin >> input;
 
-        start_pub.send_start(metadata);
+        start_pub.send_json(metadata);
         cout << "Metadata sent." << endl;
     }
 }

@@ -7,6 +7,7 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
+
 Sub::Sub(const string& host, const int& port, const string& topic)
 {
     m_host = host;
@@ -44,8 +45,19 @@ void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
         datas[i] = msgs[i].data();
         sizes[i] = msgs[i].size();
     }
+}
 
-//    string topic_str = std::string(static_cast<const char *>(msgs[0].data()), msgs[0].size());;
+Json::Value Sub::recv_json() {
+    vector<void*> datas;
+    vector<size_t> sizes;
+
+    recv_multipart(datas, sizes);
+
+    void* metadata_void = datas[1];
+    size_t size = sizes[1];
+
+    Json::Value metadata = highjson::loads(metadata_void, size);
+    return metadata;
 }
 
 string Sub::craft_address() {

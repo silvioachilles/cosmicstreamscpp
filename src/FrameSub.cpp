@@ -31,6 +31,7 @@ Frame FrameSub::recv_frame() {
     frame.posy = metadata["posy"].asFloat();
     frame.posx = metadata["posx"].asFloat();
     frame.data = datas[2];
+    frame.metadata = metadata;
 
     return frame;
 }

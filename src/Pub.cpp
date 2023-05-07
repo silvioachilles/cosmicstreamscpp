@@ -3,6 +3,7 @@
 #include <zmq_addon.hpp>
 #include <iostream>
 #include <array>
+#include "highjson.h"
 
 using std::to_string;
 using std::cout;
@@ -32,6 +33,15 @@ void Pub::send(void* data, const size_t size) {
 
     // m_socket.send(msg, zmq::send_flags::none);
     zmq::send_multipart(m_socket,msgs,zmq::send_flags::none);
+}
+
+void Pub::send_json(const Json::Value& json_value) {
+    string metadata_str = highjson::dumbs(json_value);
+
+    void* metadata_void_ptr = (void*) metadata_str.c_str();
+    size_t metadata_size = metadata_str.length();
+
+    send(metadata_void_ptr, metadata_size);
 }
 
 string Pub::craft_address() {
