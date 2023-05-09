@@ -16,7 +16,7 @@ public:
 
     zmq::context_t m_context;
     zmq::socket_t m_socket;
-    zmq::socket_ref m_socket_ref = m_socket;
+    zmq::socket_ref m_socket_ref;
 
     string m_host;
     int m_port;

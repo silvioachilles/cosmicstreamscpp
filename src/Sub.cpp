@@ -20,6 +20,8 @@ Sub::Sub(const string& host, const int& port, const string& topic)
     m_socket.connect(m_address);
     cout << "Subscribing to topic: " << m_topic << endl;
     m_socket.set(zmq::sockopt::subscribe, m_topic);
+
+    m_socket_ref = m_socket;
 }
 
 void Sub::recv(void*& data, size_t& size) {

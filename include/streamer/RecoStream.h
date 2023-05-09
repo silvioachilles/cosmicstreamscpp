@@ -29,7 +29,7 @@ public:
     int m_abort_port = ABORT_PORT;
     string m_abort_topic = ABORT_TOPIC;
 
-    zmq::poller_t<zmq::socket_t> m_poller;
+    zmq::poller_t<> m_poller;
 
     RecoStream() = default;
     RecoStream(const string& host);
@@ -39,6 +39,8 @@ public:
                const string& host_abort);
 
     void init_sockets();
+
+    zmq::poller_event<> get_event();
 
     bool something_in_queue();
 

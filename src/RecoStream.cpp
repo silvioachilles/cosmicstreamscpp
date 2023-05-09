@@ -29,42 +29,67 @@ void RecoStream::init_sockets() {
     m_socket_stop = Sub(m_stop_host, m_stop_port, m_stop_topic);
     m_socket_abort = Sub(m_abort_host, m_abort_port, m_abort_topic);
 
+    m_poller = zmq::poller_t<> ();
     m_poller.add(m_socket_start.m_socket_ref, zmq::event_flags::pollin);
     m_poller.add(m_socket_frame.m_socket_ref, zmq::event_flags::pollin);
     m_poller.add(m_socket_stop.m_socket_ref, zmq::event_flags::pollin);
     m_poller.add(m_socket_abort.m_socket_ref, zmq::event_flags::pollin);
 }
 
-bool RecoStream::something_in_queue() {
-    vector<zmq::poller_event<zmq::socket_t>> events;
+zmq::poller_event<> RecoStream::get_event() {
+    vector<zmq::poller_event<>> events (1);
     std::chrono::milliseconds timeout(0);
     m_poller.wait_all(events, timeout);
 
-    if (events.empty())
-    {
+    return events[0];
+}
+
+bool RecoStream::something_in_queue() {
+    zmq::poller_event<> event = get_event();
+
+    if (event.socket.handle() == NULL) {
         return false;
     }
     return true;
 }
 
 bool RecoStream::has_start_arrived() {
-    vector<zmq::poller_event<zmq::socket_t>> events;
-    std::chrono::milliseconds timeout(0);
-    m_poller.wait_all(events, timeout);
+    zmq::poller_event<> event = get_event();
 
-//    if (std::count(events.begin, events.end(), zmq::poller_event<zmq::socket_t>(m_socket_start.m_socket_ref)))
+    if (event.socket.handle() == m_socket_start.m_socket.handle()) {
+        return true;
+    }
+
     return false;
 }
 
 bool RecoStream::has_frame_arrived() {
+    zmq::poller_event<> event = get_event();
+
+    if (event.socket.handle() == m_socket_frame.m_socket.handle()) {
+        return true;
+    }
+
     return false;
 }
 
 bool RecoStream::has_stop_arrived() {
+    zmq::poller_event<> event = get_event();
+
+    if (event.socket.handle() == m_socket_stop.m_socket.handle()) {
+        return true;
+    }
+
     return false;
 }
 
 bool RecoStream::has_abort_arrived() {
+    zmq::poller_event<> event = get_event();
+
+    if (event.socket.handle() == m_socket_abort.m_socket.handle()) {
+        return true;
+    }
+
     return false;
 }
 

@@ -75,3 +75,14 @@ target_link_libraries(
 )
 
 install(TARGETS test_highjson)
+
+# test 06: test_RecoStream
+add_executable(
+        test_RecoStream
+        "${CMAKE_SOURCE_DIR}/test/test_RecoStream.cpp"
+)
+
+target_link_libraries(
+        test_RecoStream
+        RecoStream
+)
