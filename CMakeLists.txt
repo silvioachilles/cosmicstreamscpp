@@ -79,6 +79,8 @@ add_library(
         "${CMAKE_SOURCE_DIR}/globals/defaults.cpp"
         "${CMAKE_SOURCE_DIR}/globals/defaults.h"
         "${CMAKE_SOURCE_DIR}/globals/structs.h"
+        "${CMAKE_SOURCE_DIR}/globals/datatype_strings.h"
+        "${CMAKE_SOURCE_DIR}/globals/datatype_strings.cpp"
 )
 
 target_include_directories(
@@ -95,29 +97,51 @@ target_link_libraries(
 
 install(TARGETS Globals)
 
-########### -- frame -- ###########
+########### -- FrameSub -- ###########
 add_library(
-        Frame
+        FrameSub
         "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
         "${CMAKE_SOURCE_DIR}/include/frame/FrameSub.h"
 )
 
 target_include_directories(
-        Frame
+        FrameSub
         PUBLIC
         "${CMAKE_SOURCE_DIR}/include/frame"
 )
 
 target_link_libraries(
-        Frame
+        FrameSub
         PUBLIC
         Globals
         Sub
+        highjson
+)
+
+install(TARGETS FrameSub)
+
+########### -- FramePub -- ###########
+add_library(
+        FramePub
+        "${CMAKE_SOURCE_DIR}/src/FramePub.cpp"
+        "${CMAKE_SOURCE_DIR}/include/frame/FramePub.h"
+)
+
+target_include_directories(
+        FramePub
+        PUBLIC
+        "${CMAKE_SOURCE_DIR}/include/frame"
+)
+
+target_link_libraries(
+        FramePub
+        PUBLIC
+        Globals
         Pub
         highjson
 )
 
-install(TARGETS Frame)
+install(TARGETS FramePub)
 
 ######### -- RecoStream -- #########
 add_library(

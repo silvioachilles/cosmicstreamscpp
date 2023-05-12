@@ -3,6 +3,9 @@
 #include <string>
 #include <zmq.hpp>
 #include <json/json.h>
+#include <vector>
+
+using std::vector;
 
 
 using std::string;
@@ -22,6 +25,7 @@ public:
     zmq::socket_t m_socket;
 
     void send(void* data, size_t size);
+    void send_multipart(const vector<void*>& datas, const vector<size_t>& sizes);
     void send_json(const Json::Value& json_value);
 
     string craft_address();

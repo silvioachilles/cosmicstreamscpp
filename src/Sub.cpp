@@ -25,13 +25,16 @@ Sub::Sub(const string& host, const int& port, const string& topic)
 }
 
 void Sub::recv(void*& data, size_t& size) {
-    zmq::recv_result_t result;
-    zmq::message_t msg;
+    zmq::recv_result_t result_topic;
+    zmq::message_t msg_topic;
+    zmq::recv_result_t result_data;
+    zmq::message_t msg_data;
 
-    result = m_socket.recv(msg, zmq::recv_flags::none);
+    result_topic = m_socket.recv(msg_topic, zmq::recv_flags::none);
+    result_data = m_socket.recv(msg_data, zmq::recv_flags::none);
 
-    data = msg.data();
-    size = msg.size();
+    data = msg_data.data();
+    size = msg_data.size();
 }
 
 void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
@@ -39,24 +42,21 @@ void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
 
     zmq::recv_multipart(m_socket, std::back_inserter(msgs));
 
-    datas = vector<void*> (msgs.size());
-    sizes = vector<size_t> (msgs.size());
+    datas = vector<void*> (msgs.size() - 1);
+    sizes = vector<size_t> (msgs.size() - 1);
 
-    for (int i = 0; i < msgs.size(); i++)
+    for (int i = 0; i < datas.size(); i++)
     {
-        datas[i] = msgs[i].data();
-        sizes[i] = msgs[i].size();
+        datas[i] = msgs[i + 1].data();
+        sizes[i] = msgs[i + 1].size();
     }
 }
 
 Json::Value Sub::recv_json() {
-    vector<void*> datas;
-    vector<size_t> sizes;
+    void* metadata_void;
+    size_t size;
 
-    recv_multipart(datas, sizes);
-
-    void* metadata_void = datas[1];
-    size_t size = sizes[1];
+    recv(metadata_void, size);
 
     Json::Value metadata = highjson::loads(metadata_void, size);
     return metadata;

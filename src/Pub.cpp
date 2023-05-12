@@ -21,8 +21,6 @@ Pub::Pub(const string& host, const int& port, const string& topic) {
     craft_address();
     cout << "Binding to " << m_address << endl;
     m_socket.bind(m_address);
-
-    return;
 }
 
 void Pub::send(void* data, const size_t size) {
@@ -31,8 +29,19 @@ void Pub::send(void* data, const size_t size) {
 
     array<zmq::message_t, 2> msgs = {zmq::message_t(m_topic), zmq::message_t(data, size)};
 
-    // m_socket.send(msg, zmq::send_flags::none);
     zmq::send_multipart(m_socket,msgs,zmq::send_flags::none);
+}
+
+void Pub::send_multipart(const vector<void*>& datas, const vector<size_t>& sizes) {
+    // array<zmq::message_t, datas.size()> msgs;
+    vector<zmq::message_t> msgs (datas.size() + 1);
+    msgs[0] = zmq::message_t(m_topic);
+
+    for (int i = 0; i < datas.size(); i++) {
+        msgs[i + 1] = zmq::message_t(datas[i], sizes[i]);
+    }
+
+    zmq::send_multipart(m_socket, msgs, zmq::send_flags::none);
 }
 
 void Pub::send_json(const Json::Value& json_value) {
