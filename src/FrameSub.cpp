@@ -17,7 +17,7 @@ Frame FrameSub::recv_frame() {
 
     recv_multipart(datas, sizes);
 
-    Json::Value metadata = highjson::loads(datas[1], sizes[1]);
+    Json::Value metadata = highjson::loads(datas[0], sizes[0]);
 
     Frame frame;
 
@@ -30,7 +30,7 @@ Frame FrameSub::recv_frame() {
     frame.index = metadata["index"].asInt();
     frame.posy = metadata["posy"].asFloat();
     frame.posx = metadata["posx"].asFloat();
-    frame.data = datas[2];
+    frame.data = datas[1];
     frame.metadata = metadata;
 
     return frame;

@@ -48,9 +48,15 @@ int main() {
     frame.order = "C";
     frame.data = (void*) data;
 
+    cout << "Sending frame" << endl;
     frame_pub.send_frame(frame);
+    cout << "\tdone." << endl;
 
+    cout << "Sleeping for 2 seconds" << endl;
+    sleep(2.0);
+    cout << "Waiting to receive frame" << endl;
     Frame frame_recv = frame_sub.recv_frame();
+    cout << "\treceived" << endl;
 
     assert(frame.identifier == frame_recv.identifier);
     assert(frame.index == frame_recv.index);

@@ -31,7 +31,7 @@ Json::Value highjson::loads(const string& json_string) {
     }
     else
     {
-        throw std::logic_error("Could not parse received metadata.");
+        throw std::logic_error("Could not parse string to Json::Value.");
     }
 }
 

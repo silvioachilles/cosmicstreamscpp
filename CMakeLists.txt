@@ -159,8 +159,8 @@ target_include_directories(
 target_link_libraries(
         RecoStream
         PUBLIC
-        Sub
-        Frame
+        FrameSub
+        Globals
 )
 
 install(TARGETS RecoStream)

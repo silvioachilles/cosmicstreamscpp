@@ -34,4 +34,6 @@ void FramePub::send_frame(const Frame& frame) {
 
     datas[1] = data;
     sizes[1] = size;
+
+    send_multipart(datas, sizes);
 }
