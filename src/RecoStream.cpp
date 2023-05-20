@@ -6,13 +6,6 @@
 using std::vector;
 
 
-RecoStream::RecoStream(const string& host) {
-    m_start_host = host;
-    m_frame_host = host;
-    m_stop_host = host;
-    m_abort_host = host;
-}
-
 RecoStream::RecoStream(const string& host_start,
                        const string& host_frame,
                        const string& host_stop,

@@ -1,5 +1,6 @@
 #include "FramePub.h"
 #include "FrameSub.h"
+#include "TestData.h"
 
 #include <string>
 #include <iostream>
@@ -27,26 +28,7 @@ int main() {
     cout << "Sleeping for 5 seconds to allow sockets to initialize" << endl;
     sleep(5.0);
 
-    size_t ny = 10;
-    size_t nx = 10;
-    string dtype = "int32";
-
-    int* data = new int[ny * nx];
-    for (int i = 0; i < ny * nx; i++) {
-        data[i] = i;
-    }
-
-    Frame frame;
-    frame.identifier = "id";
-    frame.index = 100;
-    frame.posx = 10.0;
-    frame.posy = 10.0;
-    frame.shape_y = ny;
-    frame.shape_x = nx;
-    frame.dtype = dtype;
-    frame.byteorder = "<";
-    frame.order = "C";
-    frame.data = (void*) data;
+    Frame frame = get_framedata();
 
     cout << "Sending frame" << endl;
     frame_pub.send_frame(frame);
@@ -68,8 +50,12 @@ int main() {
     assert(frame.byteorder == frame_recv.byteorder);
     assert(frame.order == frame_recv.order);
 
+    // The fact that the datatype is int is hardcoded in the testdata.
+    // We make use of that we know it is hardcoded and that it is int.
+    // (But it is no good practice!)
+    int* data_send = (int*) frame.data;
     int* data_recv = (int*) frame_recv.data;
-    for (int i = 0; i < ny * nx; i++) {
-        assert(data[i] == data_recv[i]);
+    for (int i = 0; i < frame.shape_y * frame.shape_x; i++) {
+        assert(data_send[i] == data_recv[i]);
     }
 }

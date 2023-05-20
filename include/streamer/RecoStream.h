@@ -32,7 +32,6 @@ public:
     zmq::poller_t<> m_poller;
 
     RecoStream() = default;
-    RecoStream(const string& host);
     RecoStream(const string& host_start,
                const string& host_frame,
                const string& host_stop,

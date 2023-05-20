@@ -47,6 +47,7 @@ target_link_libraries(
         test_Pub_start
         PUBLIC
         Pub
+        TestData
 )
 
 install(TARGETS test_Pub_start)

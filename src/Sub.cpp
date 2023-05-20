@@ -25,16 +25,12 @@ Sub::Sub(const string& host, const int& port, const string& topic)
 }
 
 void Sub::recv(void*& data, size_t& size) {
-    zmq::recv_result_t result_topic;
-    zmq::message_t msg_topic;
-    zmq::recv_result_t result_data;
-    zmq::message_t msg_data;
+    vector<zmq::message_t> msgs;
 
-    result_topic = m_socket.recv(msg_topic, zmq::recv_flags::none);
-    result_data = m_socket.recv(msg_data, zmq::recv_flags::none);
+    zmq::recv_multipart(m_socket, std::back_inserter(msgs));
 
-    data = msg_data.data();
-    size = msg_data.size();
+    data = msgs[1].data();
+    size = msgs[1].size();
 }
 
 void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
@@ -53,12 +49,12 @@ void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
 }
 
 Json::Value Sub::recv_json() {
-    void* metadata_void;
+    void* data;
     size_t size;
 
-    recv(metadata_void, size);
+    recv(data, size);
 
-    Json::Value metadata = highjson::loads(metadata_void, size);
+    Json::Value metadata = highjson::loads(data, size);
     return metadata;
 }
 

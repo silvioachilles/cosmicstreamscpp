@@ -6,7 +6,7 @@
 
 using std::string;
 
-class FramePub: Pub {
+class FramePub: public Pub {
 public:
     FramePub() = default;
     FramePub(const string& host, const int& port, const string& topic);

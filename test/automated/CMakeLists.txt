@@ -96,7 +96,27 @@ target_link_libraries(
         ctest_FramePubFrameSub
         FramePub
         FrameSub
+        TestData
 )
 
 install(TARGETS ctest_FramePubFrameSub)
 add_test(NAME ctest_FramePubFrameSub COMMAND $<TARGET_FILE:ctest_FramePubFrameSub>)
+
+
+# test 07: test_RecoStream
+add_executable(
+        ctest_RecoStream
+        "${CMAKE_SOURCE_DIR}/test/automated/test_RecoStream.cpp"
+)
+
+target_link_libraries(
+        ctest_RecoStream
+        RecoStream
+        Pub
+        FramePub
+        Globals
+        TestData
+)
+
+install(TARGETS ctest_RecoStream)
+add_test(NAME ctest_RecoStream COMMAND $<TARGET_FILE:ctest_RecoStream>)
