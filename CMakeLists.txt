@@ -13,14 +13,14 @@ find_package(jsoncpp CONFIG REQUIRED)
 add_library(
         highjson
         "${CMAKE_SOURCE_DIR}/src/highjson.cpp"
-        "${CMAKE_SOURCE_DIR}/include/highjson/highjson.h"
+        "${CMAKE_SOURCE_DIR}/include/highjson.h"
 )
 
 target_include_directories(
         highjson
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/highjson>
-        $<INSTALL_INTERFACE:include/highjson>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -35,13 +35,13 @@ target_link_libraries(
 add_library(
     Pub
     "${CMAKE_SOURCE_DIR}/src/Pub.cpp"
-    "${CMAKE_SOURCE_DIR}/include/base/Pub.h"
+    "${CMAKE_SOURCE_DIR}/include/Pub.h"
 )
 
 target_include_directories(
         Pub
         PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/base"
+        "${CMAKE_SOURCE_DIR}/include"
 )
 
 target_link_libraries(
@@ -58,14 +58,14 @@ add_library(
         Sub
         STATIC
         "${CMAKE_SOURCE_DIR}/src/Sub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/base/Sub.h"
+        "${CMAKE_SOURCE_DIR}/include/Sub.h"
 )
 
 target_include_directories(
         Sub
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/base>
-        $<INSTALL_INTERFACE:include/base>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -78,18 +78,18 @@ target_link_libraries(
 ########## -- Globals -- ##########
 add_library(
         Globals
-        "${CMAKE_SOURCE_DIR}/globals/defaults.cpp"
-        "${CMAKE_SOURCE_DIR}/globals/defaults.h"
-        "${CMAKE_SOURCE_DIR}/globals/structs.h"
-        "${CMAKE_SOURCE_DIR}/globals/datatype_strings.h"
-        "${CMAKE_SOURCE_DIR}/globals/datatype_strings.cpp"
+        "${CMAKE_SOURCE_DIR}/src/defaults.cpp"
+        "${CMAKE_SOURCE_DIR}/include/defaults.h"
+        "${CMAKE_SOURCE_DIR}/include/structs.h"
+        "${CMAKE_SOURCE_DIR}/include/datatype_strings.h"
+        "${CMAKE_SOURCE_DIR}/src/datatype_strings.cpp"
 )
 
 target_include_directories(
         Globals
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/globals>
-        $<INSTALL_INTERFACE:globals>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -103,13 +103,13 @@ target_link_libraries(
 add_library(
         FrameSub
         "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/frame/FrameSub.h"
+        "${CMAKE_SOURCE_DIR}/include/FrameSub.h"
 )
 target_include_directories(
         FrameSub
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/frame>
-        $<INSTALL_INTERFACE:include/frame>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -125,14 +125,14 @@ target_link_libraries(
 add_library(
         FramePub
         "${CMAKE_SOURCE_DIR}/src/FramePub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/frame/FramePub.h"
+        "${CMAKE_SOURCE_DIR}/include/FramePub.h"
 )
 
 target_include_directories(
         FramePub
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/frame>
-        $<INSTALL_INTERFACE:include/streamer>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -154,16 +154,16 @@ target_sources(
         cosmicstreams
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/RecoStream.cpp>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/streamer>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:src/RecoStream.cpp>
-        $<INSTALL_INTERFACE:include/streamer>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_include_directories(
         cosmicstreams
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/streamer>
-        $<INSTALL_INTERFACE:include/streamer>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -184,19 +184,38 @@ set_property(TARGET cosmicstreams PROPERTY SOVERSION 1)
 set_property(TARGET cosmicstreams PROPERTY INTERFACE_cosmicstreams_MAJOR_VERSION 1)
 set_property(TARGET cosmicstreams APPEND PROPERTY COMPATIBLE_INTERFACE_STRING cosmicstreams_MAJOR_VERSION)
 
+set(public_headers
+    include/RecoStream.h
+    include/Sub.h
+    include/highjson.h
+    include/FrameSub.h
+    include/structs.h
+    include/defaults.h
+    )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
+
+message("Hello")
+message("project_name: ${PROJECT_NAME}")
+message("public_headers: ${public_headers}")
+message("CMAKE_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}")
+
+include(GNUInstallDirs)
 install(TARGETS cosmicstreams FrameSub Globals Sub highjson
         # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/cosmicstreams
         EXPORT cosmicstreamsTargets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
+        # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         INCLUDES DESTINATION include
         )
 
-install(FILES include/streamer/RecoStream.h "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams_export.h"
-        DESTINATION include
-        COMPONENT Devel
-        )
+#install(FILES include/RecoStream.h "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams_export.h"
+#        DESTINATION include
+#        COMPONENT Devel
+#        )
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(

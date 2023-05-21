@@ -1,8 +1,8 @@
-#include "FramePub.h"
+#include "include/FramePub.h"
 
-#include "highjson.h"
+#include "include/highjson.h"
 
-#include "datatype_strings.h"
+#include "include/datatype_strings.h"
 
 FramePub::FramePub(const string& host, const int& port, const string& topic):
     Pub(host, port, topic) {

@@ -1,5 +1,5 @@
-#include "structs.h"
-#include "highjson.h"
+#include "include/structs.h"
+#include "include/highjson.h"
 
 
 Json::Value get_startdata();

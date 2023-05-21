@@ -1,9 +1,9 @@
-#include "Pub.h"
+#include "include/Pub.h"
 
 #include <zmq_addon.hpp>
 #include <iostream>
 #include <array>
-#include "highjson.h"
+#include "include/highjson.h"
 
 using std::to_string;
 using std::cout;

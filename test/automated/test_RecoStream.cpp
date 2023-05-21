@@ -1,9 +1,9 @@
-#include "RecoStream.h"
-#include "Pub.h"
-#include "defaults.h"
-#include "structs.h"
+#include "include/RecoStream.h"
+#include "include/Pub.h"
+#include "include/defaults.h"
+#include "include/structs.h"
 #include "TestData.h"
-#include "FramePub.h"
+#include "include/FramePub.h"
 
 #include <json/json.h>
 
