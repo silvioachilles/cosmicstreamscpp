@@ -11,7 +11,6 @@ target_link_libraries(
         highjson
 )
 
-install(TARGETS ctest_highjson)
 enable_testing()
 add_test(NAME ctest_highjson COMMAND $<TARGET_FILE:ctest_highjson>)
 
@@ -26,7 +25,6 @@ target_link_libraries(
         Pub
 )
 
-install(TARGETS ctest_Pub)
 add_test(NAME ctest_Pub COMMAND $<TARGET_FILE:ctest_Pub>)
 
 # test 02: test_sub
@@ -40,7 +38,6 @@ target_link_libraries(
         Sub
 )
 
-install(TARGETS ctest_Sub)
 add_test(NAME ctest_Sub COMMAND $<TARGET_FILE:ctest_Sub>)
 
 # test 03: test_PubSub
@@ -55,7 +52,6 @@ target_link_libraries(
         Sub
 )
 
-install(TARGETS ctest_PubSub)
 add_test(NAME ctest_PubSub COMMAND $<TARGET_FILE:ctest_PubSub>)
 
 # test 05: test_FramePub
@@ -69,7 +65,6 @@ target_link_libraries(
         FramePub
 )
 
-install(TARGETS ctest_FramePub)
 add_test(NAME ctest_FramePub COMMAND $<TARGET_FILE:ctest_FramePub>)
 
 # test 06: test_FrameSub
@@ -83,7 +78,6 @@ target_link_libraries(
         FrameSub
 )
 
-install(TARGETS ctest_FrameSub)
 add_test(NAME ctest_FrameSub COMMAND $<TARGET_FILE:ctest_FrameSub>)
 
 # test 06: test_FramePubFrameSub
@@ -99,7 +93,6 @@ target_link_libraries(
         TestData
 )
 
-install(TARGETS ctest_FramePubFrameSub)
 add_test(NAME ctest_FramePubFrameSub COMMAND $<TARGET_FILE:ctest_FramePubFrameSub>)
 
 
@@ -111,12 +104,11 @@ add_executable(
 
 target_link_libraries(
         ctest_RecoStream
-        RecoStream
+        cosmicstreams
         Pub
         FramePub
         Globals
         TestData
 )
 
-install(TARGETS ctest_RecoStream)
 add_test(NAME ctest_RecoStream COMMAND $<TARGET_FILE:ctest_RecoStream>)

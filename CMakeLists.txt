@@ -25,7 +25,6 @@ target_link_libraries(
         JsonCpp::JsonCpp
 )
 
-install(TARGETS highjson)
 
 # Pub and Sub are low-level targets.
 ############ -- Pub -- ############
@@ -48,7 +47,6 @@ target_link_libraries(
         JsonCpp::JsonCpp
 )
 
-install(TARGETS Pub)
 
 
 ############ -- Sub -- ############
@@ -71,7 +69,6 @@ target_link_libraries(
         highjson
 )
 
-install(TARGETS Sub)
 
 ########## -- Globals -- ##########
 add_library(
@@ -95,7 +92,6 @@ target_link_libraries(
         JsonCpp::JsonCpp
 )
 
-install(TARGETS Globals)
 
 ########### -- FrameSub -- ###########
 add_library(
@@ -118,7 +114,6 @@ target_link_libraries(
         highjson
 )
 
-install(TARGETS FrameSub)
 
 ########### -- FramePub -- ###########
 add_library(
@@ -141,29 +136,28 @@ target_link_libraries(
         highjson
 )
 
-install(TARGETS FramePub)
 
 ######### -- RecoStream -- #########
 add_library(
-        RecoStream
+        cosmicstreams
         "${CMAKE_SOURCE_DIR}/src/RecoStream.cpp"
         "${CMAKE_SOURCE_DIR}/include/streamer/RecoStream.h"
 )
 
 target_include_directories(
-        RecoStream
+        cosmicstreams
         PUBLIC
         "${CMAKE_SOURCE_DIR}/include/streamer"
 )
 
 target_link_libraries(
-        RecoStream
+        cosmicstreams
         PUBLIC
         FrameSub
         Globals
 )
 
-install(TARGETS RecoStream)
+install(TARGETS cosmicstreams)
 
 #### -> Add subdirectories
 add_subdirectory(test)

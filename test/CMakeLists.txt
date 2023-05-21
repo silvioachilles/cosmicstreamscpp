@@ -21,6 +21,3 @@ target_link_libraries(
         Globals
         highjson
 )
-
-
-install(TARGETS TestData)

@@ -9,7 +9,6 @@ target_link_libraries(
         Pub
 )
 
-install(TARGETS test_Pub)
 
 # test 02: test_Sub
 add_executable(
@@ -22,7 +21,6 @@ target_link_libraries(
         Sub
 )
 
-install(TARGETS test_Sub)
 
 # test 03: test_Sub_start
 add_executable(
@@ -35,7 +33,6 @@ target_link_libraries(
         Sub
 )
 
-install(TARGETS test_Sub_start)
 
 # test 04: test_Pub_start
 add_executable(
@@ -50,7 +47,6 @@ target_link_libraries(
         TestData
 )
 
-install(TARGETS test_Pub_start)
 
 # test 05: test_FrameSub
 add_executable(
@@ -64,7 +60,6 @@ target_link_libraries(
 )
 
 
-
 # test 06: test_RecoStream
 add_executable(
         test_RecoStream
@@ -73,5 +68,5 @@ add_executable(
 
 target_link_libraries(
         test_RecoStream
-        RecoStream
+        cosmicstreams
 )
