@@ -17,7 +17,7 @@ int main()
     // Update: this test also works in combination with test_StartPub
 
     string host = "127.0.0.1";
-    int port = 5555;
+    int port = 37013;
     string topic = "start";
     Sub start_sub (host, port, topic);
     while (true)

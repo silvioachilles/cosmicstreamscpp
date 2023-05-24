@@ -18,6 +18,7 @@ Frame FrameSub::recv_frame() {
     recv_multipart(datas, sizes);
 
     Json::Value metadata = highjson::loads(datas[0], sizes[0]);
+    free(datas[0]);
 
     Frame frame;
 

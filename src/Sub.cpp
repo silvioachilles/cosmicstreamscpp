@@ -29,7 +29,14 @@ void Sub::recv(void*& data, size_t& size) {
 
     zmq::recv_multipart(m_socket, std::back_inserter(msgs));
 
-    data = msgs[1].data();
+    string test = string(static_cast<const char*>(msgs[0].data()), msgs[0].size());
+    string test2 = string(static_cast<const char*>(msgs[1].data()), msgs[1].size());
+
+    // TODO: This implies that the receiver will deallocate the memory
+    // Could there be a better solution so that the user is not responsible for the allocated memory?
+    data = malloc(sizeof(char) * msgs[1].size());
+    memcpy(data, msgs[1].data(), sizeof(char) * msgs[1].size());
+
     size = msgs[1].size();
 }
 
@@ -43,8 +50,10 @@ void Sub::recv_multipart(vector<void*>& datas, vector<size_t>& sizes) {
 
     for (int i = 0; i < datas.size(); i++)
     {
-        datas[i] = msgs[i + 1].data();
         sizes[i] = msgs[i + 1].size();
+        datas[i] = malloc(sizeof(char) * msgs[i + 1].size());
+        memcpy(datas[i], msgs[i + 1].data(), sizeof(char) * msgs[i + 1].size());
+        // datas[i] = msgs[i + 1].data();
     }
 }
 
@@ -55,6 +64,7 @@ Json::Value Sub::recv_json() {
     recv(data, size);
 
     Json::Value metadata = highjson::loads(data, size);
+    free(data);
     return metadata;
 }
 
