@@ -1,7 +1,6 @@
 #include "Sub.h"
-#include "FrameSub.h"
+#include "Pub.h"
 #include "defaults.h"
-// #include "FramePub.h"
 
 #include <string>
 
@@ -14,7 +13,7 @@ public:
     int m_start_port = START_PORT;
     string m_start_topic = START_TOPIC;
 
-    FrameSub m_socket_frame;
+    Sub m_socket_frame;
     string m_frame_host;
     int m_frame_port = FRAME_PORT;
     string m_frame_topic = FRAME_TOPIC;
@@ -29,13 +28,20 @@ public:
     int m_abort_port = ABORT_PORT;
     string m_abort_topic = ABORT_TOPIC;
 
+    Pub m_socket_rec;
+    string m_rec_host = PUB_HOST_ALL;
+    int m_rec_port = REC_PORT;
+    string m_rec_topic = REC_TOPIC;
+    bool m_use_out = true;
+
     zmq::poller_t<> m_poller;
 
     RecoStream() = default;
     RecoStream(const string& host_start,
                const string& host_frame,
                const string& host_stop,
-               const string& host_abort);
+               const string& host_abort,
+               const bool& use_out);
 
     void init_sockets();
 
@@ -52,4 +58,5 @@ public:
     Frame recv_frame();
     Json::Value recv_stop();
     Json::Value recv_abort();
+    void send_rec(const Reco& reco);
 };

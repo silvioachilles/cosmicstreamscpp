@@ -34,6 +34,7 @@ target_link_libraries(
 ############ -- Pub -- ############
 add_library(
     Pub
+    STATIC
     "${CMAKE_SOURCE_DIR}/src/Pub.cpp"
     "${CMAKE_SOURCE_DIR}/include/Pub.h"
 )
@@ -41,7 +42,8 @@ add_library(
 target_include_directories(
         Pub
         PUBLIC
-        "${CMAKE_SOURCE_DIR}/include"
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -49,6 +51,7 @@ target_link_libraries(
         cppzmq
         highjson
         JsonCpp::JsonCpp
+        Globals
 )
 
 
@@ -99,49 +102,49 @@ target_link_libraries(
 )
 
 
-########### -- FrameSub -- ###########
-add_library(
-        FrameSub
-        "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/FrameSub.h"
-)
-target_include_directories(
-        FrameSub
-        PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-)
+######### -- FrameSub -- ###########
+#add_library(
+#        FrameSub
+#        "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
+#        "${CMAKE_SOURCE_DIR}/include/FrameSub.h"
+#)
+#target_include_directories(
+#        FrameSub
+#        PUBLIC
+#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#        $<INSTALL_INTERFACE:include>
+#)
+#
+#target_link_libraries(
+#        FrameSub
+#        PUBLIC
+#        Globals
+#        Sub
+#        highjson
+#)
 
-target_link_libraries(
-        FrameSub
-        PUBLIC
-        Globals
-        Sub
-        highjson
-)
 
-
-########### -- FramePub -- ###########
-add_library(
-        FramePub
-        "${CMAKE_SOURCE_DIR}/src/FramePub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/FramePub.h"
-)
-
-target_include_directories(
-        FramePub
-        PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-)
-
-target_link_libraries(
-        FramePub
-        PUBLIC
-        Globals
-        Pub
-        highjson
-)
+########## -- FramePub -- ###########
+#add_library(
+#        FramePub
+#        "${CMAKE_SOURCE_DIR}/src/FramePub.cpp"
+#        "${CMAKE_SOURCE_DIR}/include/FramePub.h"
+#)
+#
+#target_include_directories(
+#        FramePub
+#        PUBLIC
+#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#        $<INSTALL_INTERFACE:include>
+#)
+#
+#target_link_libraries(
+#        FramePub
+#        PUBLIC
+#        Globals
+#        Pub
+#        highjson
+#)
 
 ###################################################################################
 ######### -- cosmicstreams -- this yields the final library libcosmicstreams.a ####
@@ -169,7 +172,8 @@ target_include_directories(
 target_link_libraries(
         cosmicstreams
         PUBLIC
-        FrameSub
+        Sub
+        Pub
         Globals
 )
 
@@ -186,9 +190,9 @@ set_property(TARGET cosmicstreams APPEND PROPERTY COMPATIBLE_INTERFACE_STRING co
 
 set(public_headers
     include/RecoStream.h
+    include/Pub.h
     include/Sub.h
     include/highjson.h
-    include/FrameSub.h
     include/structs.h
     include/defaults.h
     )
@@ -201,7 +205,7 @@ message("public_headers: ${public_headers}")
 message("CMAKE_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}")
 
 include(GNUInstallDirs)
-install(TARGETS cosmicstreams FrameSub Globals Sub highjson
+install(TARGETS cosmicstreams Pub Globals Sub highjson
         # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/cosmicstreams
         EXPORT cosmicstreamsTargets
         LIBRARY DESTINATION lib

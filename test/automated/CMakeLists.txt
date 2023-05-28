@@ -62,7 +62,7 @@ add_executable(
 
 target_link_libraries(
         ctest_FramePub
-        FramePub
+        Pub
 )
 
 add_test(NAME ctest_FramePub COMMAND $<TARGET_FILE:ctest_FramePub>)
@@ -75,7 +75,7 @@ add_executable(
 
 target_link_libraries(
         ctest_FrameSub
-        FrameSub
+        Sub
 )
 
 add_test(NAME ctest_FrameSub COMMAND $<TARGET_FILE:ctest_FrameSub>)
@@ -88,8 +88,8 @@ add_executable(
 
 target_link_libraries(
         ctest_FramePubFrameSub
-        FramePub
-        FrameSub
+        Pub
+        Sub
         TestData
 )
 
@@ -106,7 +106,7 @@ target_link_libraries(
         ctest_RecoStream
         cosmicstreams
         Pub
-        FramePub
+        Sub
         Globals
         TestData
 )

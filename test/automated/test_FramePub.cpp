@@ -1,4 +1,4 @@
-#include "include/FramePub.h"
+#include "include/Pub.h"
 
 #include <string>
 #include <iostream>
@@ -13,7 +13,7 @@ int main() {
     int port = 5555;
     string topic = "frame";
 
-    FramePub frame_pub (host, port, topic);
+    Pub frame_pub (host, port, topic);
 
     size_t ny = 10;
     size_t nx = 10;

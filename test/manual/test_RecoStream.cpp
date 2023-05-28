@@ -12,7 +12,7 @@ using std::cin;
 int main() {
     string host = "127.0.0.1";
     int port = 5555;
-    RecoStream streamer (host, host, host, host);
+    RecoStream streamer (host, host, host, host, true);
     streamer.m_start_port = port;
     streamer.m_frame_port = port;
     streamer.m_stop_port = port;

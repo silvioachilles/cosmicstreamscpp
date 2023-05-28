@@ -9,18 +9,24 @@ using std::vector;
 RecoStream::RecoStream(const string& host_start,
                        const string& host_frame,
                        const string& host_stop,
-                       const string& host_abort) {
+                       const string& host_abort,
+                       const bool& use_out) {
     m_start_host = host_start;
     m_frame_host = host_frame;
     m_stop_host = host_stop;
     m_abort_host = host_abort;
+
+    m_use_out = use_out;
 }
 
 void RecoStream::init_sockets() {
     m_socket_start = Sub(m_start_host, m_start_port, m_start_topic);
-    m_socket_frame = FrameSub(m_frame_host, m_frame_port, m_frame_topic);
+    m_socket_frame = Sub(m_frame_host, m_frame_port, m_frame_topic);
     m_socket_stop = Sub(m_stop_host, m_stop_port, m_stop_topic);
     m_socket_abort = Sub(m_abort_host, m_abort_port, m_abort_topic);
+    if (m_use_out) {
+        m_socket_rec = Pub(m_rec_host, m_rec_port, m_rec_topic);
+    }
 
     m_poller = zmq::poller_t<> ();
     m_poller.add(m_socket_start.m_socket_ref, zmq::event_flags::pollin);
@@ -100,4 +106,10 @@ Json::Value RecoStream::recv_stop() {
 
 Json::Value RecoStream::recv_abort() {
     return m_socket_abort.recv_json();
+}
+
+void RecoStream::send_rec(const Reco& reco) {
+    if (m_use_out) {
+        m_socket_rec.send_rec(reco);
+    }
 }

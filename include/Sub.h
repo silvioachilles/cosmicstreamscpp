@@ -4,6 +4,7 @@
 #include <zmq.hpp>
 #include <vector>
 #include "highjson.h"
+#include "structs.h"
 
 using std::vector;
 using std::string;
@@ -26,6 +27,8 @@ public:
     void recv(void*& data, size_t& size);
     void recv_multipart(vector<void*>& datas, vector<size_t>& sizes);
     Json::Value recv_json();
+    Frame recv_frame();
+    Reco recv_rec();
 
     string craft_address();
 };

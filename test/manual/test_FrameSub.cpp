@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "include/FrameSub.h"
+#include "include/Sub.h"
 
 using std::string;
 using std::cout;
@@ -12,7 +12,7 @@ int main() {
     string host = "127.0.0.1";
     int port = 37013;
     string topic = "frame";
-    FrameSub frame_sub (host, port, topic);
+    Sub frame_sub (host, port, topic);
 
     while (true) {
         Frame frame = frame_sub.recv_frame();
@@ -20,6 +20,8 @@ int main() {
         cout << "shape_y: " << frame.shape_y << endl;
         cout << "shape_x: " << frame.shape_x << endl;
         cout << "dtype: " << frame.dtype << endl;
+
+        cout << frame.metadata["identifier"].asString() << endl;
 
         float* data_float = (float*) frame.data;
         cout << data_float[256 * 512 + 100] << endl;

@@ -18,6 +18,9 @@ size_t datatype_size_from_string(const string& dtype_str) {
     else if (dtype_str == "int64") {
         return_value = 8;
     }
+    else if (dtype_str == "complex64") {
+        return_value = 8;
+    }
     else {
         throw logic_error("dtype_str '" + dtype_str + "' not known.");
     }

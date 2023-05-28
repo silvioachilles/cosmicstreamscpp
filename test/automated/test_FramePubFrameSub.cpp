@@ -1,5 +1,5 @@
-#include "include/FramePub.h"
-#include "include/FrameSub.h"
+#include "include/Pub.h"
+#include "include/Sub.h"
 #include "TestData.h"
 
 #include <string>
@@ -18,12 +18,12 @@ int main() {
     string topic = "frame";
 
     cout << "Setting up FramePub" << endl;
-    FramePub frame_pub (host_pub, port, topic);
+    Pub frame_pub (host_pub, port, topic);
 
     string host_sub = "127.0.0.1";
 
     cout << "Setting up FrameSub" << endl;
-    FrameSub frame_sub (host_sub, port, topic);
+    Sub frame_sub (host_sub, port, topic);
 
     cout << "Sleeping for 5 seconds to allow sockets to initialize" << endl;
     sleep(5.0);

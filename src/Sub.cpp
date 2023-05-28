@@ -68,6 +68,57 @@ Json::Value Sub::recv_json() {
     return metadata;
 }
 
+Frame Sub::recv_frame() {
+    vector<void*> datas;
+    vector<size_t> sizes;
+
+    recv_multipart(datas, sizes);
+
+    Json::Value metadata = highjson::loads(datas[0], sizes[0]);
+    free(datas[0]);
+
+    Frame frame;
+
+    frame.shape_y = metadata["shape_y"].asInt();
+    frame.shape_x = metadata["shape_x"].asInt();
+    frame.dtype = metadata["dtype"].asString();
+    frame.byteorder = metadata["byteorder"].asString();
+    frame.order = metadata["order"].asString();
+    frame.identifier = metadata["identifier"].asString();
+    frame.index = metadata["index"].asInt();
+    frame.posy = metadata["posy"].asFloat();
+    frame.posx = metadata["posx"].asFloat();
+    frame.data = datas[1];
+    frame.metadata = metadata;
+
+    return frame;
+}
+
+Reco Sub::recv_rec() {
+    vector<void*> datas;
+    vector<size_t> sizes;
+
+    recv_multipart(datas, sizes);
+
+    Json::Value metadata = highjson::loads(datas[0], sizes[0]);
+    free(datas[0]);
+
+    Reco reco;
+
+    reco.shape_y = metadata["shape_y"].asInt();
+    reco.shape_x = metadata["shape_x"].asInt();
+    reco.dtype = metadata["dtype"].asString();
+    reco.byteorder = metadata["byteorder"].asString();
+    reco.order = metadata["order"].asString();
+    reco.identifier = metadata["identifier"].asString();
+    reco.pixelsize_x = metadata["obj_pixelsize_x"].asFloat();
+    reco.pixelsize_y = metadata["obj_pixelsize_y"].asFloat();
+    reco.data = datas[1];
+    reco.metadata = metadata;
+
+    return reco;
+}
+
 string Sub::craft_address() {
     m_address = "tcp://" + m_host + ":" + to_string(m_port);
     return m_address;

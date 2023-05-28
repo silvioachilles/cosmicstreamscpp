@@ -1,4 +1,7 @@
 #include "TestData.h"
+#include <complex>
+
+using std::complex;
 
 
 Json::Value get_startdata() {
@@ -56,6 +59,32 @@ Frame get_framedata() {
 
     return frame;
 }
+
+
+Reco get_recdata() {
+    size_t ny = 10;
+    size_t nx = 10;
+    string dtype = "complex64";
+
+    complex<float>* data = new complex<float>[ny * nx];
+    for (int i = 0; i < ny * nx; i++) {
+        data[i] = complex<float>(0.1f * i, 0.1f * i);
+    }
+
+    Reco reco;
+    reco.identifier = "id";
+    reco.pixelsize_x = 1.12;
+    reco.pixelsize_y = 2.34;
+    reco.shape_y = ny;
+    reco.shape_x = nx;
+    reco.dtype = dtype;
+    reco.byteorder = "<";
+    reco.order = "C";
+    reco.data = (void*) data;
+
+    return reco;
+}
+
 
 Json::Value get_stopdata() {
     Json::Value metadata;

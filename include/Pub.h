@@ -4,6 +4,7 @@
 #include <zmq.hpp>
 #include <json/json.h>
 #include <vector>
+#include "structs.h"
 
 using std::vector;
 
@@ -27,6 +28,8 @@ public:
     void send(void* data, size_t size);
     void send_multipart(const vector<void*>& datas, const vector<size_t>& sizes);
     void send_json(const Json::Value& json_value);
+    void send_frame(const Frame& frame);
+    void send_rec(const Reco& reco);
 
     string craft_address();
 };
