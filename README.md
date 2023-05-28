@@ -30,20 +30,21 @@ cmake .. -Djsoncpp_DIR=~/somefolder/share/jsoncpp  -Dcppzmq_DIR=~/somefolder/sha
 
 The headers are located in
 ```
-${CMAKE_INSTALL_PREFIX}/include/cosmicstreams
+${CMAKE_INSTALL_PREFIX}/include/cosmicstreamscpp
 ```
 The library is located at 
 ```
-${CMAKE_INSTALL_PREFIX}/lib/libcosmicstreams.a
+${CMAKE_INSTALL_PREFIX}/lib/libcosmicstreamscpp.a
 ```
 CMake support is given at
 ```
-${CMAKE_INSTALL_PREFIX}/share/cmake/cosmicstreams
+${CMAKE_INSTALL_PREFIX}/share/cmake/cosmicstreamscpp
 ```
 so in case of using cmake, you may want to point cmake to the right directory: 
 ```
 cmake .. -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
 ```
+Be aware that using libcosmicstreamscpp.a still requires to link cppzmq and jsoncpp to your project.
 
 
 **Example**

@@ -1,9 +1,9 @@
-#include "include/RecoStream.h"
-#include "include/Pub.h"
-#include "include/defaults.h"
-#include "include/structs.h"
+#include "cosmicstreamscpp/RecoStream.h"
+#include "cosmicstreamscpp/Pub.h"
+#include "cosmicstreamscpp/defaults.h"
+#include "cosmicstreamscpp/structs.h"
 #include "TestData.h"
-#include "include/Sub.h"
+#include "cosmicstreamscpp/Sub.h"
 
 #include <json/json.h>
 

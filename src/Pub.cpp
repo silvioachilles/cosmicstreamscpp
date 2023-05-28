@@ -1,11 +1,11 @@
-#include "include/Pub.h"
+#include "include/cosmicstreamscpp/Pub.h"
 
 #include <zmq_addon.hpp>
 #include <iostream>
 #include <array>
-#include "include/highjson.h"
-#include "structs.h"
-#include "datatype_strings.h"
+#include "include/cosmicstreamscpp/highjson.h"
+#include "include/cosmicstreamscpp/structs.h"
+#include "include/cosmicstreamscpp/datatype_strings.h"
 
 using std::to_string;
 using std::cout;

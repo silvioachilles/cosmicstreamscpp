@@ -1,4 +1,4 @@
-#include "include/Sub.h"
+#include "cosmicstreamscpp/Sub.h"
 #include <json/json.h>
 
 #include <string>

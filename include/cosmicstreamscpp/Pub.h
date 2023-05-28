@@ -4,7 +4,7 @@
 #include <zmq.hpp>
 #include <json/json.h>
 #include <vector>
-#include "structs.h"
+#include "cosmicstreamscpp/structs.h"
 
 using std::vector;
 

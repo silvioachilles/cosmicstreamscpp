@@ -1,4 +1,4 @@
-#include "include/RecoStream.h"
+#include "cosmicstreamscpp/RecoStream.h"
 #include <string>
 #include <iostream>
 #include <cassert>

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
-project(cosmicstreams)
+# project(cosmicstreams)
+project(cosmicstreamscpp)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
@@ -13,7 +14,7 @@ find_package(jsoncpp CONFIG REQUIRED)
 add_library(
         highjson
         "${CMAKE_SOURCE_DIR}/src/highjson.cpp"
-        "${CMAKE_SOURCE_DIR}/include/highjson.h"
+        "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/highjson.h"
 )
 
 target_include_directories(
@@ -36,7 +37,7 @@ add_library(
     Pub
     STATIC
     "${CMAKE_SOURCE_DIR}/src/Pub.cpp"
-    "${CMAKE_SOURCE_DIR}/include/Pub.h"
+    "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/Pub.h"
 )
 
 target_include_directories(
@@ -61,7 +62,7 @@ add_library(
         Sub
         STATIC
         "${CMAKE_SOURCE_DIR}/src/Sub.cpp"
-        "${CMAKE_SOURCE_DIR}/include/Sub.h"
+        "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/Sub.h"
 )
 
 target_include_directories(
@@ -82,9 +83,9 @@ target_link_libraries(
 add_library(
         Globals
         "${CMAKE_SOURCE_DIR}/src/defaults.cpp"
-        "${CMAKE_SOURCE_DIR}/include/defaults.h"
-        "${CMAKE_SOURCE_DIR}/include/structs.h"
-        "${CMAKE_SOURCE_DIR}/include/datatype_strings.h"
+        "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/defaults.h"
+        "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/structs.h"
+        "${CMAKE_SOURCE_DIR}/include/cosmicstreamscpp/datatype_strings.h"
         "${CMAKE_SOURCE_DIR}/src/datatype_strings.cpp"
 )
 
@@ -133,25 +134,65 @@ target_link_libraries(
         Globals
 )
 
-# set_target_properties(cosmicstreams PROPERTIES PUBLIC_HEADER "include/streamer/RecoStream.h")
+###################################################################################
+######### The target that will be installed for external use ####
+###################################################################################
 
+add_library(cosmicstreamscpp SHARED)
+
+
+target_sources(
+        cosmicstreamscpp
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/datatype_strings.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/defaults.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/highjson.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Pub.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/RecoStream.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Sub.cpp>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:src/datatype_strings.cpp>
+        $<INSTALL_INTERFACE:src/defaults.cpp>
+        $<INSTALL_INTERFACE:src/highjson.cpp>
+        $<INSTALL_INTERFACE:src/Pub.cpp>
+        $<INSTALL_INTERFACE:src/RecoStream.cpp>
+        $<INSTALL_INTERFACE:src/Sub.cpp>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_include_directories(
+        cosmicstreamscpp
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(
+        cosmicstreamscpp
+        PUBLIC
+        JsonCpp::JsonCpp
+        cppzmq
+)
+
+
+# set_target_properties(cosmicstreams PROPERTIES PUBLIC_HEADER "include/streamer/RecoStream.h")
 #### This create the cosmicstreamsConfig.cmake file
-set(cosmicstreams_VERSION 1.0.0)
+set(cosmicstreamscpp_VERSION 1.0.0)
 include(GenerateExportHeader)
-generate_export_header(cosmicstreams)
-set_property(TARGET cosmicstreams PROPERTY VERSION ${cosmicstreams_VERSION})
-set_property(TARGET cosmicstreams PROPERTY SOVERSION 1)
-set_property(TARGET cosmicstreams PROPERTY INTERFACE_cosmicstreams_MAJOR_VERSION 1)
-set_property(TARGET cosmicstreams APPEND PROPERTY COMPATIBLE_INTERFACE_STRING cosmicstreams_MAJOR_VERSION)
+generate_export_header(cosmicstreamscpp)
+set_property(TARGET cosmicstreamscpp PROPERTY VERSION ${cosmicstreamscpp_VERSION})
+set_property(TARGET cosmicstreamscpp PROPERTY SOVERSION 1)
+set_property(TARGET cosmicstreamscpp PROPERTY INTERFACE_cosmicstreamscpp_MAJOR_VERSION 1)
+set_property(TARGET cosmicstreamscpp APPEND PROPERTY COMPATIBLE_INTERFACE_STRING cosmicstreams_MAJOR_VERSION)
 
 set(public_headers
-    include/RecoStream.h
-    include/Pub.h
-    include/Sub.h
-    include/highjson.h
-    include/structs.h
-    include/defaults.h
-    )
+        include/cosmicstreamscpp/RecoStream.h
+        include/cosmicstreamscpp/Pub.h
+        include/cosmicstreamscpp/Sub.h
+        include/cosmicstreamscpp/highjson.h
+        include/cosmicstreamscpp/structs.h
+        include/cosmicstreamscpp/defaults.h
+        )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
 
@@ -161,15 +202,15 @@ message("public_headers: ${public_headers}")
 message("CMAKE_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}")
 
 include(GNUInstallDirs)
-install(TARGETS cosmicstreams Pub Globals Sub highjson
-        # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/cosmicstreams
-        EXPORT cosmicstreamsTargets
+install(TARGETS cosmicstreamscpp
+        # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/cosmicstreamscpp
+        EXPORT cosmicstreamscppTargets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
         # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        INCLUDES DESTINATION include/cosmicstreams
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cosmicstreamscpp
+        INCLUDES DESTINATION include/
         )
 
 #install(FILES include/RecoStream.h "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams_export.h"
@@ -179,34 +220,34 @@ install(TARGETS cosmicstreams Pub Globals Sub highjson
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams/cosmicstreamsConfigVersion.cmake"
-        VERSION ${cosmicstreams_VERSION}
+        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreamscpp/cosmicstreamscppConfigVersion.cmake"
+        VERSION ${cosmicstreamscpp_VERSION}
         COMPATIBILITY AnyNewerVersion
 )
 
-export(EXPORT cosmicstreamsTargets
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams/cosmicstreamsTargets.cmake"
-        NAMESPACE cosmicstreams::
+export(EXPORT cosmicstreamscppTargets
+        FILE "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreamscpp/cosmicstreamscppTargets.cmake"
+        NAMESPACE cosmicstreamscpp::
         )
 
-configure_file(cmake/cosmicstreamsConfig.cmake
-        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams/cosmicstreamsConfig.cmake"
+configure_file(cmake/cosmicstreamscppConfig.cmake
+        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreamscpp/cosmicstreamscppConfig.cmake"
         COPYONLY
         )
 
-set(ConfigPackageLocation lib/cmake/cosmicstreams)
-install(EXPORT cosmicstreamsTargets
+set(ConfigPackageLocation lib/cmake/cosmicstreamscpp)
+install(EXPORT cosmicstreamscppTargets
         FILE
-        cosmicstreamsTargets.cmake
+        cosmicstreamscppTargets.cmake
         NAMESPACE
-        cosmicstreams::
+        cosmicstreamscpp::
         DESTINATION
         ${ConfigPackageLocation}
         )
 install(
         FILES
-        cmake/cosmicstreamsConfig.cmake
-        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams/cosmicstreamsConfigVersion.cmake"
+        cmake/cosmicstreamscppConfig.cmake
+        "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreamscpp/cosmicstreamscppConfigVersion.cmake"
         DESTINATION
         ${ConfigPackageLocation}
         COMPONENT

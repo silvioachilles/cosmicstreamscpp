@@ -1,4 +1,4 @@
-#include "include/Sub.h"
+#include "include/cosmicstreamscpp/Sub.h"
 #include "zmq_addon.hpp"
 
 #include <iostream>

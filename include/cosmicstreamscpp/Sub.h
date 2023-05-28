@@ -3,8 +3,8 @@
 #include <string>
 #include <zmq.hpp>
 #include <vector>
-#include "highjson.h"
-#include "structs.h"
+#include "cosmicstreamscpp/highjson.h"
+#include "cosmicstreamscpp/structs.h"
 
 using std::vector;
 using std::string;

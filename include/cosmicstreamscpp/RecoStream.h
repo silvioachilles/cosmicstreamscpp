@@ -1,6 +1,6 @@
-#include "Sub.h"
-#include "Pub.h"
-#include "defaults.h"
+#include "cosmicstreamscpp/Sub.h"
+#include "cosmicstreamscpp/Pub.h"
+#include "cosmicstreamscpp/defaults.h"
 
 #include <string>
 

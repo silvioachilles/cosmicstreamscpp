@@ -1,5 +1,5 @@
-#include "include/Pub.h"
-#include "include/Sub.h"
+#include "cosmicstreamscpp/Pub.h"
+#include "cosmicstreamscpp/Sub.h"
 
 #include <string>
 #include <cassert>

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "include/Sub.h"
+#include "cosmicstreamscpp/Sub.h"
 
 using std::string;
 using std::cout;

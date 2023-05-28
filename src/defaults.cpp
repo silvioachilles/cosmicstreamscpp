@@ -1,4 +1,4 @@
-#include "include/defaults.h"
+#include "include/cosmicstreamscpp/defaults.h"
 
 string PUB_HOST_ALL = "*";
 

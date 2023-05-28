@@ -1,4 +1,4 @@
-#include "include/datatype_strings.h"
+#include "include/cosmicstreamscpp/datatype_strings.h"
 #include <typeinfo>
 #include <stdexcept>
 

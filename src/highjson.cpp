@@ -1,4 +1,4 @@
-#include "include/highjson.h"
+#include "include/cosmicstreamscpp/highjson.h"
 
 
 using std::unique_ptr;

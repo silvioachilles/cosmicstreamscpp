@@ -1,4 +1,4 @@
-#include "include/Pub.h"
+#include "cosmicstreamscpp/Pub.h"
 #include "TestData.h"
 
 #include <string>

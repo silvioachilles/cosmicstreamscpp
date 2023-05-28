@@ -1,5 +1,5 @@
-#include "include/structs.h"
-#include "include/highjson.h"
+#include "cosmicstreamscpp/structs.h"
+#include "cosmicstreamscpp/highjson.h"
 
 
 Json::Value get_startdata();

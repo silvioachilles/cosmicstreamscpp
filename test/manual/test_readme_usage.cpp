@@ -1,4 +1,4 @@
-#include "RecoStream.h"
+#include "cosmicstreamscpp/RecoStream.h"
 #include <complex>
 #include <string>
 using std::string;

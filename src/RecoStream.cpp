@@ -1,4 +1,4 @@
-#include "include/RecoStream.h"
+#include "include/cosmicstreamscpp/RecoStream.h"
 
 #include <vector>
 #include <chrono>

@@ -1,4 +1,4 @@
-#include "include/highjson.h"
+#include "cosmicstreamscpp/highjson.h"
 
 #include <cassert>
 #include <string>
