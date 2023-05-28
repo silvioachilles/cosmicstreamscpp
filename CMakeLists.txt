@@ -102,50 +102,6 @@ target_link_libraries(
 )
 
 
-######### -- FrameSub -- ###########
-#add_library(
-#        FrameSub
-#        "${CMAKE_SOURCE_DIR}/src/FrameSub.cpp"
-#        "${CMAKE_SOURCE_DIR}/include/FrameSub.h"
-#)
-#target_include_directories(
-#        FrameSub
-#        PUBLIC
-#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#        $<INSTALL_INTERFACE:include>
-#)
-#
-#target_link_libraries(
-#        FrameSub
-#        PUBLIC
-#        Globals
-#        Sub
-#        highjson
-#)
-
-
-########## -- FramePub -- ###########
-#add_library(
-#        FramePub
-#        "${CMAKE_SOURCE_DIR}/src/FramePub.cpp"
-#        "${CMAKE_SOURCE_DIR}/include/FramePub.h"
-#)
-#
-#target_include_directories(
-#        FramePub
-#        PUBLIC
-#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#        $<INSTALL_INTERFACE:include>
-#)
-#
-#target_link_libraries(
-#        FramePub
-#        PUBLIC
-#        Globals
-#        Pub
-#        highjson
-#)
-
 ###################################################################################
 ######### -- cosmicstreams -- this yields the final library libcosmicstreams.a ####
 ###################################################################################
