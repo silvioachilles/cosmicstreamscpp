@@ -169,7 +169,7 @@ install(TARGETS cosmicstreams Pub Globals Sub highjson
         RUNTIME DESTINATION bin
         # PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        INCLUDES DESTINATION include
+        INCLUDES DESTINATION include/cosmicstreams
         )
 
 #install(FILES include/RecoStream.h "${CMAKE_CURRENT_BINARY_DIR}/cosmicstreams_export.h"

@@ -1,54 +1,3 @@
-cosmicstreamscpp
-
-The pre-decisions for the creation of this repository are captured here:
-https://docs.google.com/document/d/1ZfKQh1YZ1TV16pfNNddB979664ZL49z5ZQM5TNRJBRY/edit
-
-
-**Installation**
-
-It is required to have
-1. jsoncpp
-2. cppzmq
-
-installed and findable via cmake find_package.  Then,
-
-```
-mkdir build
-cmake .. -DCMAKE_INSTALL_PREFIX=<path to install>
-make
-make install
-```
-
-If cmake fails to find one of the required libraries you can specify custom locations 
-```
-cmake .. -Djsoncpp_DIR=~/somefolder/share/jsoncpp  -Dcppzmq_DIR=~/somefolder/share/cmake/cppzmq
-```
-
-
-
-**Usage**
-
-The headers are located in
-```
-${CMAKE_INSTALL_PREFIX}/include/cosmicstreams
-```
-The library is located at 
-```
-${CMAKE_INSTALL_PREFIX}/lib/libcosmicstreams.a
-```
-CMake support is given at
-```
-${CMAKE_INSTALL_PREFIX}/share/cmake/cosmicstreams
-```
-so in case of using cmake, you may want to point cmake to the right directory: 
-```
-cmake .. -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
-```
-
-
-**Example**
-```c++
-
 #include "RecoStream.h"
 #include <complex>
 #include <string>
@@ -117,16 +66,15 @@ int main() {
     reco.identifier = "dataset001";
     reco.order = "C";
     reco.byteorder = "<";
-    
+
     auto* data = new complex<float>[reco.shape_y * reco.shape_x];
     for (int iy = 0; iy < reco.shape_y; iy++) {
         for (int ix = 0; ix < reco.shape_x; ix++) {
             data[iy * reco.shape_x + ix] = complex<float>(0.1f * iy, 0.1f * ix);
         }
     }
-    
+
     reco.data = (void*) data;
     streamer.send_rec(reco);
     delete[] data;
 }
-```

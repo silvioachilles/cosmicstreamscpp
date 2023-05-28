@@ -70,3 +70,15 @@ target_link_libraries(
         test_RecoStream
         cosmicstreams
 )
+
+
+# test 07: test_readme_usage
+add_executable(
+        test_readme_usage
+        "${CMAKE_SOURCE_DIR}/test/manual/test_readme_usage.cpp"
+)
+
+target_link_libraries(
+        test_readme_usage
+        cosmicstreams
+)
