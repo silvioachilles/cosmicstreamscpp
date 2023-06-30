@@ -68,7 +68,7 @@ add_executable(
 
 target_link_libraries(
         test_RecoStream
-        cosmicstreams
+        cosmicstreamscpp
 )
 
 
@@ -80,5 +80,5 @@ add_executable(
 
 target_link_libraries(
         test_readme_usage
-        cosmicstreams
+        cosmicstreamscpp
 )

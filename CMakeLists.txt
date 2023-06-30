@@ -27,7 +27,7 @@ target_include_directories(
 target_link_libraries(
         highjson
         PUBLIC
-        JsonCpp::JsonCpp
+	 JsonCpp::JsonCpp
 )
 
 
@@ -104,41 +104,10 @@ target_link_libraries(
 
 
 ###################################################################################
-######### -- cosmicstreams -- this yields the final library libcosmicstreams.a ####
-###################################################################################
-add_library(
-        cosmicstreams
-)
-
-target_sources(
-        cosmicstreams
-        PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/RecoStream.cpp>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:src/RecoStream.cpp>
-        $<INSTALL_INTERFACE:include>
-)
-
-target_include_directories(
-        cosmicstreams
-        PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-)
-
-target_link_libraries(
-        cosmicstreams
-        PUBLIC
-        Sub
-        Pub
-        Globals
-)
-
-###################################################################################
 ######### The target that will be installed for external use ####
 ###################################################################################
 
-add_library(cosmicstreamscpp SHARED)
+add_library(cosmicstreamscpp STATIC)
 
 
 target_sources(
@@ -187,11 +156,11 @@ set_property(TARGET cosmicstreamscpp APPEND PROPERTY COMPATIBLE_INTERFACE_STRING
 
 set(public_headers
         include/cosmicstreamscpp/RecoStream.h
-        include/cosmicstreamscpp/Pub.h
-        include/cosmicstreamscpp/Sub.h
-        include/cosmicstreamscpp/highjson.h
+        # include/cosmicstreamscpp/Pub.h
+        # include/cosmicstreamscpp/Sub.h
+        # include/cosmicstreamscpp/highjson.h
         include/cosmicstreamscpp/structs.h
-        include/cosmicstreamscpp/defaults.h
+        # include/cosmicstreamscpp/defaults.h
         )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")

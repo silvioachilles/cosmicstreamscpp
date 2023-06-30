@@ -104,7 +104,7 @@ add_executable(
 
 target_link_libraries(
         ctest_RecoStream
-        cosmicstreams
+        cosmicstreamscpp
         Pub
         Sub
         Globals
